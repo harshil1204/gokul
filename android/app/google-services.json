@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "983758988574",
+    "project_id": "gokul-f0492",
+    "storage_bucket": "gokul-f0492.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983758988574:android:e3935a844de51bceb8150f",
+        "android_client_info": {
+          "package_name": "com.example.gokul"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvKwqoqHUJoFuFW3NrI6koJj4EdxbOmz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
