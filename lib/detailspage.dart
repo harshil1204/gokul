@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:readmore/readmore.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DetailsPage extends StatefulWidget {
   var data;
@@ -15,21 +17,26 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
         centerTitle: true,
         title: Text(widget.data['name'].toString(),style: const TextStyle(
           fontSize: 22,fontWeight: FontWeight.bold,
         ),),
-        actions: const [
+        actions:  [
           InkWell(
-            child: Padding(
+            onTap: () async{
+              await Share.share('Name: ${widget.data['name']} \n weight: ${widget.data['price']}(gm) \n extra: ₹${widget.data['extra']}');
+            },
+            child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Icon(Icons.share,size: 25,),
             ),
           ),
         ],
       ),
-      body: zoom==false?SingleChildScrollView(
+      body: zoom==false
+          ?SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -42,6 +49,7 @@ class _DetailsPageState extends State<DetailsPage> {
                  });
                },
                child: Container(
+                 constraints: const BoxConstraints(maxHeight: 480),
                   clipBehavior: Clip.hardEdge,
                  decoration: BoxDecoration(
                    borderRadius: BorderRadius.circular(30),
@@ -128,21 +136,18 @@ class _DetailsPageState extends State<DetailsPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        children: [
-                          // const Text("Description : ",
-                          //   style: TextStyle(
-                          //     fontSize: 16,
-                          //       fontWeight: FontWeight.w600
-                          //   ),
-                          // ),
-                          Text(widget.data['description'],
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey
-                            ),
-                          ),
-                        ],
+                      ReadMoreText(widget.data['description'],
+                        trimLines: 2,
+                        trimMode: TrimMode.Line,
+                        colorClickableText: Colors.black,
+                        trimCollapsedText: 'Show more',
+                        trimExpandedText: 'Show less',
+                        lessStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black),
+                        moreStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black),
+                        style:  TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
                       )
                     ],
                   ),
@@ -168,13 +173,15 @@ class _DetailsPageState extends State<DetailsPage> {
               padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 1)
+                  border: Border.all(width: 1),
+                  color: Colors.black
                 ),
-                child: const Icon(Icons.close,size: 30)),
+                child: const Icon(Icons.close,size: 30,color: Colors.white,)),
           ),
         ),
         Container(
-          alignment: Alignment.center,
+          margin: const EdgeInsets.only(top: 90),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: InteractiveViewer(
             panEnabled: true, // Set it to false
             boundaryMargin: const EdgeInsets.all(100),

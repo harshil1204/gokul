@@ -165,6 +165,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
         title: const Text("Gokul Jewellers",
             style: TextStyle(fontSize: 20)),

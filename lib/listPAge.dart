@@ -35,6 +35,7 @@ class _ListWisePageState extends State<ListWisePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -67,9 +68,12 @@ class _ListWisePageState extends State<ListWisePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        const SizedBox(
+                          height: 9,
+                        ),
                         Expanded(
                           child: GridView.builder(
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 0.9,crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 14),
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 0.8,crossAxisCount: 2, crossAxisSpacing: 18, mainAxisSpacing: 14),
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {
                               var data = snapshot.data!.docs[index];
@@ -85,11 +89,17 @@ class _ListWisePageState extends State<ListWisePage> {
                                   decoration: BoxDecoration(/*border: Border.all(width: 1, color: Colors.black), */borderRadius: BorderRadius.circular(9)),
                                   child: Column(
                                     children: [
-                                      SizedBox(
-                                          height: 150,
+                                      Container(
+                                          height: 170,
+                                          width: double.infinity,
+                                          clipBehavior: Clip.hardEdge,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20)
+                                          ),
                                           child: Image.network(
                                             data['url'],
                                             fit: BoxFit.fill,
+
                                           )),
                                       Expanded(
                                         child: Container(
@@ -101,7 +111,7 @@ class _ListWisePageState extends State<ListWisePage> {
                                           child: Center(
                                             child: Text(
                                               data['name'].toString() ?? '',
-                                              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black),
+                                              style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: Colors.black),
                                             ),
                                           ),
                                         ),
