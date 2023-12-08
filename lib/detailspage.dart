@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -17,7 +17,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.9),
+     // backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
         centerTitle: true,
         title: Text(widget.data['name'].toString(),style: const TextStyle(
@@ -36,130 +36,143 @@ class _DetailsPageState extends State<DetailsPage> {
         ],
       ),
       body: zoom==false
-          ?SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          ?Stack(
             children: [
-             InkWell(
-               onTap: (){
-                 setState(() {
-                   zoom=true;
-                 });
-               },
-               child: Container(
-                 constraints: const BoxConstraints(maxHeight: 480),
-                  clipBehavior: Clip.hardEdge,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(30),
-                   border: Border.all(color: Colors.grey,width: 2)
+              Opacity(
+                opacity: 0.4,
+                  child: Image.asset("assets/images/bg2.JPEG",fit: BoxFit.fill,height: double.infinity )),
+              SingleChildScrollView(
+        child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                 InkWell(
+                   onTap: (){
+                     setState(() {
+                       zoom=true;
+                     });
+                   },
+                   child: Container(
+                     constraints: const BoxConstraints(maxHeight: 480),
+                      clipBehavior: Clip.hardEdge,
+                     decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(30),
+                       border: Border.all(color: Colors.grey,width: 2)
+                     ),
+                     width: double.infinity,
+                     //height: 500,
+                     child: ClipRRect(
+                         borderRadius: BorderRadius.circular(30),
+                     child: CachedNetworkImage(imageUrl:widget.data['url'].toString(),
+                         placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
+                           fit: BoxFit.fill,),
+                         fit: BoxFit.fill)),
+                   ),
                  ),
-                 width: double.infinity,
-                 //height: 500,
-                 child: ClipRRect(
-                     borderRadius: BorderRadius.circular(30),
-                 child: Image.network(widget.data['url'].toString(),fit: BoxFit.fill)),
-               ),
-             ),
-             /* InteractiveViewer(
-                panEnabled: true, // Set it to false
-                boundaryMargin: const EdgeInsets.all(100),
-                minScale: 0.5,
-                maxScale: 2,
-                scaleEnabled: true,
-                child: Image.network(
-                  widget.data['url'].toString(),
-                  width: double.infinity,
-                  height: 350,
-                  fit: BoxFit.fill,
-                ),
-              ),*/
-              // const Divider(thickness: 0.9,height: 2,),
-              Container(
-                //height: 100,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  //color: Colors.grey,
-                ),
-                child:  Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                       Wrap(
-                         children: [
-                           const Text("N : ",style: TextStyle(
-                             //color: Colors.white,
-                               fontSize: 16,
-                               fontWeight: FontWeight.w600
-                           ),),
-                           Text("${widget.data['name']}",style: const TextStyle(
-                             //color: Colors.white,
-                             fontSize: 16,
-                           ),),
-                           const SizedBox(
-                             width: 10,
-                           ),
-                           const Text("W : ",style: TextStyle(
-                             //color: Colors.white,
-                               fontSize: 16,
-                               fontWeight: FontWeight.w600
-                           ),),
-                           Text("${widget.data['price']}",style: const TextStyle(
-                             //color: Colors.white,
-                             fontSize: 16,
-                           ),),
-                           const Text(" (gm)",style: TextStyle(
-                             //color: Colors.white,
-                             fontSize: 12,
-                           ),),
-                           const SizedBox(
-                             width: 10,
-                           ),
-                           const Text("Extra : ",
-                             style: TextStyle(
+                 /* InteractiveViewer(
+                    panEnabled: true, // Set it to false
+                    boundaryMargin: const EdgeInsets.all(100),
+                    minScale: 0.5,
+                    maxScale: 2,
+                    scaleEnabled: true,
+                    child: Image.network(
+                      widget.data['url'].toString(),
+                      width: double.infinity,
+                      height: 350,
+                      fit: BoxFit.fill,
+                    ),
+                  ),*/
+                  // const Divider(thickness: 0.9,height: 2,),
+                  Container(
+                    //height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      //color: Colors.grey,
+                    ),
+                    child:  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                           Wrap(
+                             children: [
+                               const Text("N : ",style: TextStyle(
+                                 //color: Colors.white,
+                                   fontSize: 16,
+                                   fontWeight: FontWeight.w600
+                               ),),
+                               Text("${widget.data['name']}",style: const TextStyle(
+                                 //color: Colors.white,
                                  fontSize: 16,
-                                 fontWeight: FontWeight.w600
-                             ),
+                               ),),
+                               const SizedBox(
+                                 width: 10,
+                               ),
+                               const Text("W : ",style: TextStyle(
+                                 //color: Colors.white,
+                                   fontSize: 16,
+                                   fontWeight: FontWeight.w600
+                               ),),
+                               Text("${widget.data['price']}",style: const TextStyle(
+                                 //color: Colors.white,
+                                 fontSize: 16,
+                               ),),
+                               const Text(" (gm)",style: TextStyle(
+                                 //color: Colors.white,
+                                 fontSize: 12,
+                               ),),
+                               const SizedBox(
+                                 width: 10,
+                               ),
+                               const Text("Extra : ",
+                                 style: TextStyle(
+                                     fontSize: 16,
+                                     fontWeight: FontWeight.w600
+                                 ),
+                               ),
+                               Text("₹${widget.data['extra'] ?? " "}",
+                                 style: const TextStyle(
+                                   fontSize: 16,
+                                 ),
+                               ),
+                             ],
                            ),
-                           Text("₹${widget.data['extra'] ?? " "}",
-                             style: const TextStyle(
-                               fontSize: 16,
-                             ),
-                           ),
-                         ],
-                       ),
 
-                      const SizedBox(
-                        height: 30,
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          ReadMoreText(widget.data['description'],
+                            trimLines: 2,
+                            trimMode: TrimMode.Line,
+                            colorClickableText: Colors.black,
+                            trimCollapsedText: 'Show more',
+                            trimExpandedText: 'Show less',
+                            lessStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black),
+                            moreStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black),
+                            style:  const TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
                       ),
-                      ReadMoreText(widget.data['description'],
-                        trimLines: 2,
-                        trimMode: TrimMode.Line,
-                        colorClickableText: Colors.black,
-                        trimCollapsedText: 'Show more',
-                        trimExpandedText: 'Show less',
-                        lessStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black),
-                        moreStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black),
-                        style:  TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
-                        ),
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
         )
-      )
+      ),
+            ],
+          )
           :Center(
     child: Stack(
       children: [
+        Opacity(
+            opacity: 0.4,
+            child: Image.asset("assets/images/bg2.JPEG",fit: BoxFit.fill,height: double.infinity )),
          Align(
           alignment: Alignment.topRight,
           child: InkWell(
@@ -188,13 +201,16 @@ class _DetailsPageState extends State<DetailsPage> {
             minScale: 0.5,
             maxScale: 2,
             scaleEnabled: true,
-            child: Image.network(
-              widget.data['url'].toString(),
+            child: CachedNetworkImage(
+             imageUrl:widget.data['url'].toString(),
               width: double.infinity,
               fit: BoxFit.fill,
+              placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
+                fit: BoxFit.fill,),
             ),
           ),
         ),
+
       ],
     ),
     ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,9 @@ class _ListWisePageState extends State<ListWisePage> {
               print(snapshot.data!.docs);
               return Stack(
                 children: [
+                  Opacity(
+                      opacity: 0.4,
+                      child: Image.asset("assets/images/bg2.JPEG",fit: BoxFit.fill,height: double.infinity )),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -96,10 +100,10 @@ class _ListWisePageState extends State<ListWisePage> {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(20)
                                           ),
-                                          child: Image.network(
-                                            data['url'],
+                                          child:CachedNetworkImage(imageUrl: data['url'],
                                             fit: BoxFit.fill,
-
+                                            placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
+                                              fit: BoxFit.fill,),
                                           )),
                                       Expanded(
                                         child: Container(
@@ -131,7 +135,7 @@ class _ListWisePageState extends State<ListWisePage> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator(color: Colors.grey,));
             }
           }),
     );

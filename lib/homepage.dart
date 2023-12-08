@@ -121,6 +121,7 @@ class _HomePageState extends State<HomePage> {
 
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -140,18 +141,17 @@ class _HomePageState extends State<HomePage> {
 
   List<Color> colors = [Colors.blue, Colors.red, Colors.pink, Colors.orange];
   final random=Random();
-   var banner1;
+  dynamic banner1;
   final FirebaseService _firebaseService = FirebaseService();
   // List<Category> category=[];
   //
-  // void setCategory()async{
-  //   category=await _firebaseService.getAllCategories() as List<Category>;
-  //   print(category![0].name.toString());
-  // }
+  void setCategory()async{
+    banner1=await _firebaseService.fetchDataFromFirestoreBanner();
+  }
  @override
   void initState() {
-    banner1=_firebaseService.fetchDataFromFirestore();
-    print("lenght::::::${banner1}");
+   setCategory();
+    print("lenght::::::${banner1?[0]["url"]}");
    // Category newCategory = Category(id: 'category_2', name: 'Rings');
    // _firebaseService.addCategory(newCategory);
    //
@@ -178,88 +178,97 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: FutureBuilder<QuerySnapshot>(
-        future: FirebaseFirestore.instance.collection('Categories').get(),
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.done){
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                 /* Padding(
-                    padding: const EdgeInsets.only(bottom: 0, left: 5, right: 5),
-                    child: Card(
-                      elevation: 0,
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(7))),
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                          height: 200.0,
-                          aspectRatio: 16 / 5,
-                          enableInfiniteScroll: true,
-                          viewportFraction: 1,
-                          enlargeCenterPage: false,
-                          reverse: false,
-                          autoPlay: true,
-                          scrollPhysics: const NeverScrollableScrollPhysics(),
-                          autoPlayInterval: const Duration(seconds: 4),
-                          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                          autoPlayCurve: Curves.fastOutSlowIn,
+      body: Stack(
+        children: [
+          Opacity(
+              opacity: 0.4,
+              child: Image.asset("assets/images/bg2.JPEG",fit: BoxFit.fill,height: double.infinity )),
+          FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance.collection('Categories').get(),
+            builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.done){
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 0, left: 5, right: 5),
+                        child: Card(
+                          elevation: 0,
+                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(7))),
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              height: 200.0,
+                              aspectRatio: 16 / 5,
+                              enableInfiniteScroll: true,
+                              viewportFraction: 1,
+                              enlargeCenterPage: false,
+                              reverse: false,
+                              autoPlay: true,
+                              scrollPhysics: const NeverScrollableScrollPhysics(),
+                              autoPlayInterval: const Duration(seconds: 5),
+                              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                            ),
+                            items: [
+                              for (int i = 0; i < banner1.length; i++)
+                                CachedNetworkImage( imageUrl: banner1?[i]["url"],fit: BoxFit.fill,placeholder: (context, url) => const Center(
+                                  child: CupertinoActivityIndicator(color: Colors.grey),
+                                ),),
+                            ],
+                          ),
                         ),
-                        items: [
-                          // Image.network(banner1.toString(),fit: BoxFit.fill,),
-
-                        ],
                       ),
-                    ),
-                  ),*/
-                  const SizedBox(height: 7,),
-                  const Text("Category",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 7,),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount:snapshot.data!.docs.length ?? 0,
-                      physics: const AlwaysScrollableScrollPhysics(
-                          parent: BouncingScrollPhysics()
-                      ),
-                      itemBuilder:(context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: InkWell(
-                            onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListWisePage(cat_id: snapshot.data!.docs[index].id.toString(),name: snapshot.data!.docs[index]['name']),));
-                            },
-                            child: Card(
-                              elevation: 5,
-                              color: colors[random.nextInt(4)].withOpacity(0.4),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                              child:  SizedBox(
-                                height: 100,width: double.infinity,
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(snapshot.data!.docs![index]['name'].toString() ?? " ",maxLines: 1,style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),),
+                      const SizedBox(height: 7,),
+                      const Text("Category",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      const SizedBox(height: 7,),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount:snapshot.data!.docs.length ?? 0,
+                          physics: const AlwaysScrollableScrollPhysics(
+                              parent: BouncingScrollPhysics()
+                          ),
+                          itemBuilder:(context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4.0),
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListWisePage(cat_id: snapshot.data!.docs[index].id.toString(),name: snapshot.data!.docs[index]['name']),));
+                                },
+                                child: Card(
+                                  elevation: 5,
+                                  color: colors[random.nextInt(4)].withOpacity(0.4),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  child:  SizedBox(
+                                    height: 100,width: double.infinity,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(snapshot.data!.docs![index]['name'].toString() ?? " ",maxLines: 1,style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          }
-          else{
-            return const Center(child: CircularProgressIndicator());
-          }
+                );
+              }
+              else{
+                return const Center(child: CircularProgressIndicator(color: Colors.grey,));
+              }
 
-        }
+            }
+          ),
+        ],
       )
     );
   }
