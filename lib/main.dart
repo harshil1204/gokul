@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gokul/homepage.dart';
 import 'package:gokul/splash.dart';
 import 'package:gokul/theme.dart';
-
 import 'firebase_options.dart';
 
 void main() async{
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
       themeMode:ThemeMode.light,
       theme: ThemeClass.lightTheme,
       darkTheme: ThemeClass.darkTheme,
-      home: SplashView(),
+      home: const SplashView(),
     );
   }
 }

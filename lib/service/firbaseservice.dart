@@ -55,7 +55,7 @@ Future<dynamic> fetchDataFromFirestoreBanner() async {
   List<Map<String, dynamic>> dataList = [];
 
   try {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Products').get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Banner').get();
 
     var a=querySnapshot.docs.map((e) => e.data()).toList();
 

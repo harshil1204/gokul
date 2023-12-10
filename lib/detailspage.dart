@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gokul/config/config.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -39,8 +40,8 @@ class _DetailsPageState extends State<DetailsPage> {
           ?Stack(
             children: [
               Opacity(
-                opacity: 0.4,
-                  child: Image.asset("assets/images/bg2.JPEG",fit: BoxFit.fill,height: double.infinity )),
+                opacity: MyConfig.opacity,
+                  child: Image.asset(MyConfig.bg,fit: BoxFit.fill,height: double.infinity )),
               SingleChildScrollView(
         child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -171,8 +172,8 @@ class _DetailsPageState extends State<DetailsPage> {
     child: Stack(
       children: [
         Opacity(
-            opacity: 0.4,
-            child: Image.asset("assets/images/bg2.JPEG",fit: BoxFit.fill,height: double.infinity )),
+            opacity: MyConfig.opacity,
+            child: Image.asset(MyConfig.bg,fit: BoxFit.fill,height: double.infinity )),
          Align(
           alignment: Alignment.topRight,
           child: InkWell(
@@ -193,20 +194,22 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
         ),
         Container(
-          margin: const EdgeInsets.only(top: 90),
+          // margin: const EdgeInsets.only(top: 150),
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: InteractiveViewer(
-            panEnabled: true, // Set it to false
-            boundaryMargin: const EdgeInsets.all(100),
-            minScale: 0.5,
-            maxScale: 2,
-            scaleEnabled: true,
-            child: CachedNetworkImage(
-             imageUrl:widget.data['url'].toString(),
-              width: double.infinity,
-              fit: BoxFit.fill,
-              placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
-                fit: BoxFit.fill,),
+          child: Center(
+            child: InteractiveViewer(
+              panEnabled: true, // Set it to false
+              boundaryMargin: const EdgeInsets.all(100),
+              minScale: 0.5,
+              maxScale: 2,
+              scaleEnabled: true,
+              child: CachedNetworkImage(
+               imageUrl:widget.data['url'].toString(),
+                width: double.infinity,
+                fit: BoxFit.fill,
+                placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
+                  fit: BoxFit.fill,),
+              ),
             ),
           ),
         ),

@@ -128,6 +128,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gokul/service/firbaseservice.dart';
 
+import 'config/config.dart';
 import 'listPAge.dart';
 import 'model/model.dart';
 class HomePage extends StatefulWidget {
@@ -181,8 +182,8 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           Opacity(
-              opacity: 0.4,
-              child: Image.asset("assets/images/bg2.JPEG",fit: BoxFit.fill,height: double.infinity )),
+              opacity: MyConfig.opacity,
+              child: Image.asset(MyConfig.bg,fit: BoxFit.fill,height: double.infinity )),
           FutureBuilder<QuerySnapshot>(
             future: FirebaseFirestore.instance.collection('Categories').get(),
             builder: (context, snapshot) {
@@ -192,6 +193,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if(banner1.length !=0)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 0, left: 5, right: 5),
                         child: Card(
@@ -238,17 +240,30 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Card(
                                   elevation: 5,
-                                  color: colors[random.nextInt(4)].withOpacity(0.4),
+                                  //color: colors[random.nextInt(4)].withOpacity(0.4),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   child:  SizedBox(
-                                    height: 100,width: double.infinity,
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(snapshot.data!.docs![index]['name'].toString() ?? " ",maxLines: 1,style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),),
+                                    height: 140,width: double.infinity,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          if(index % 2 ==0)...[
+                                            Text(snapshot.data!.docs![index]['name'].toString() ?? " ",maxLines: 1,style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),),
+                                            CachedNetworkImage(imageUrl: snapshot.data!.docs![index]['url'].toString(),width: 140,fit: BoxFit.cover,),
+                                          ],
+                                          if(index % 2 !=0)...[
+                                            CachedNetworkImage(imageUrl: snapshot.data!.docs![index]['url'].toString(),width: 140,fit: BoxFit.cover,),
+                                            Text(snapshot.data!.docs![index]['name'].toString() ?? " ",maxLines: 1,style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),),
+                                          ]
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -265,7 +280,6 @@ class _HomePageState extends State<HomePage> {
               else{
                 return const Center(child: CircularProgressIndicator(color: Colors.grey,));
               }
-
             }
           ),
         ],

@@ -5,8 +5,8 @@ class ThemeClass{
   static ThemeData lightTheme = ThemeData(
       scaffoldBackgroundColor: Colors.white,
       colorScheme: const ColorScheme.light(),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.grey,
+      appBarTheme:  const AppBarTheme(
+        backgroundColor: Color(0xffD27D2D),
       )
   );
 
