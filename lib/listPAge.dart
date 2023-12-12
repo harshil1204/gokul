@@ -73,7 +73,12 @@ class _ListWisePageState extends State<ListWisePage> with SingleTickerProviderSt
         body: TabBarView(
           children: [
             FutureBuilder<QuerySnapshot>(
-                future: FirebaseFirestore.instance.collection('Products').where('id', isEqualTo: widget.cat_id).where('inStock',isEqualTo: "true").get(),
+                future: FirebaseFirestore.instance.collection('Products')
+                    .where('id', isEqualTo: widget.cat_id)
+                    .where('inStock',isEqualTo: "true")
+                    // .orderBy("time",descending: true)
+                    // .limit(2)
+                    .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     print(snapshot.data!.docs);
