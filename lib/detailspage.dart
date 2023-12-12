@@ -150,12 +150,12 @@ class _DetailsPageState extends State<DetailsPage> {
                             trimMode: TrimMode.Line,
                             colorClickableText: Colors.black,
                             trimCollapsedText: 'Show more',
-                            trimExpandedText: 'Show less',
-                            lessStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black),
-                            moreStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black),
+                            trimExpandedText: ' Show less',
+                            lessStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700,color: Colors.black),
+                            moreStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700,color: Colors.black),
                             style:  const TextStyle(
                               fontSize: 16,
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                           )
                         ],

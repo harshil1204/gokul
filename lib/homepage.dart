@@ -1,136 +1,13 @@
-/*
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gokul/add.dart';
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  Future<void> getData() async {
-    var data1 = (await FirebaseFirestore.instance.collection('data').get());
-    List a=data1.docs.toList();
-    print(a[0]['name']);
-  }
-  var data1 =  FirebaseFirestore.instance.collection('data');
-  @override
-  void initState() {
-    getData();
-    // TODO: implement initState
-    super.initState();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text("Xyz",style: TextStyle(color: Colors.white),),
-        actions: [
-          InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AddScreen(),));
-            },
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Icon(Icons.telegram,color: Colors.white,size: 30,),
-            ),
-          ),
-        ],
-        backgroundColor: Colors.black,
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            Text("heloo")
-          ],
-        ),
-      ),
-*/
-/*
-      StreamBuilder<QuerySnapshot>(
-          stream: data1.get().asStream(),
-          builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return const Text("Something went wrong");
-            }
-
-            if (!snapshot.hasData) {
-              return const Text("Document does not exist");
-            }
-
-            //Data is output to the user
-            if (snapshot.connectionState == ConnectionState.done) {
-              print("connection ....");
-              List data = snapshot.data!.docs.toList();
-              return GridView.builder(
-                itemCount: data.length,
-                gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,crossAxisSpacing: 10,mainAxisSpacing: 14),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: (){
-
-                      },
-                      child: Container(
-                        // height: 130,
-                       // margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 3),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 5,),
-                            SizedBox(
-                              height: 140,
-                              child: ClipRRect(
-                                  clipBehavior: Clip.hardEdge,
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.network(data[index]['link'].toString(),fit: BoxFit.fill,)),
-                            ),
-                            const SizedBox(height: 7,),
-                             Text(data[index]['name'].toString(),
-                              maxLines: 2,
-                              style: const TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 15
-                              ),),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-              );
-            }
-
-            return const Center(child: CircularProgressIndicator());
-          },),
-*//*
-
-    );
-  }
-}
-*/
-
 import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gokul/drawer/drawer.dart';
 import 'package:gokul/service/firbaseservice.dart';
-
 import 'config/config.dart';
 import 'listPAge.dart';
-import 'model/model.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -179,6 +56,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      drawer: const CustomDrawer(),
       body: Stack(
         children: [
           Opacity(
