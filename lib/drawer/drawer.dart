@@ -5,6 +5,7 @@ import 'package:gokul/drawer/contactus.dart';
 import 'package:gokul/drawer/privacy.dart';
 import 'package:gokul/drawer/terms.dart';
 import 'package:gokul/resources/color.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -35,13 +36,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     borderRadius: BorderRadius.circular(20)
                   ),
                   child: Center(
-                    child: Container(
-                      clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      color: AppColor.white,
-                      borderRadius: BorderRadius.circular(90)
-                    )
-                    ,child: Image.asset('assets/images/logo.png',height: 90,)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: AppColor.white,
+                          borderRadius: BorderRadius.circular(90)
+                        )
+                        ,child: Image.asset('assets/images/logo.png',height: 90,)),
+                        const SizedBox(height: 11,),
+                        const Text("Gokul Jewellers",style: TextStyle(
+                          fontSize: 22,color: AppColor.white,
+                          fontWeight: FontWeight.bold
+                        ),)
+                      ],
+                    ),
                   )),
 
                 ListTile(
@@ -158,13 +169,53 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
            Align(
             alignment: Alignment.bottomCenter,
-            child:Row(
-              children: [
-                IconButton(onPressed: (){
+            child:Padding(
+              padding: const EdgeInsets.only(bottom: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                      onTap: ()async{
+                        final url = Uri.parse('https://www.facebook.com/profile.php?id=61551243120905&mibextid=ZbWKwL');
+                        if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                          throw Exception('Could not launch $url');
+                        }
+                      },
+                      child: Image.asset('assets/icon/facebook.png',width: 35,height: 35,fit: BoxFit.fill)),
+                  const SizedBox(width: 9,),
+                  InkWell(
+                      onTap: () async{
+                        final url = Uri.parse('https://instagram.com/_gokul_jewellers?igshid=OGQ5ZDc2ODk2ZA==');
+                        if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                        throw Exception('Could not launch $url');
+                        }
+                      },
+                      child: Image.asset('assets/icon/instagram.png',width: 35,height: 35,fit: BoxFit.fill)),
+                  const SizedBox(width: 9,),
+                  InkWell(
+                      onTap: () async{
+                        var contact = "+919408851222";
+                        final url = Uri.parse('whatsapp://send?phone=$contact&text=Hi, I need some help');
+                        if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                          throw Exception('Could not launch $url');
+                        }
+                      },
+                      child: Image.asset('assets/icon/whatsapp.png',width: 35,height: 35,fit: BoxFit.fill)),
 
-                },
-                    icon: Icon(Icons.facebook))
-              ],
+                  const SizedBox(width: 9,),
+                  InkWell(
+                      onTap: () async{
+                        const String lat = "21.48695";
+                        const String lng = "70.95353";
+                        //const String mapUrl = "geo:$lat,$lng";
+                        final url = Uri.parse("geo:$lat,$lng");
+                        if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                          throw Exception('Could not launch $url');
+                        }
+                      },
+                      child: Image.asset('assets/icon/map.png',width: 35,height: 35,fit: BoxFit.fill)),
+                ],
+              ),
             ),
           )
         ],

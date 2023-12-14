@@ -24,7 +24,7 @@ class _ContactUsState extends State<ContactUs> {
               borderRadius: BorderRadius.circular(20),
             ),
           child: Container(
-            height: 380,
+            height: 320,
               padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 10),
             child: const Column(
               children: [
@@ -46,16 +46,16 @@ class _ContactUsState extends State<ContactUs> {
                     Flexible(child: Text("+91 9408851222", style: TextStyle(fontSize: 16,))),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0,vertical: 20),
-                  child: Divider(height: 1,thickness: 0.4,color: AppColor.dividerColor),
-                ),
-                Row(
-                  children: [
-                    Text("WhatsApp Number  :  ", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                    Flexible(child: Text("+91 9328073330", style: TextStyle(fontSize: 16,))),
-                  ],
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 8.0,vertical: 20),
+                //   child: Divider(height: 1,thickness: 0.4,color: AppColor.dividerColor),
+                // ),
+                // Row(
+                //   children: [
+                //     Text("WhatsApp Number  :  ", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                //     Flexible(child: Text("+91 9328073330", style: TextStyle(fontSize: 16,))),
+                //   ],
+                // ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0,vertical: 20),
                   child: Divider(height: 1,thickness: 0.4,color: AppColor.dividerColor),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:gokul/config/config.dart';
 import 'package:gokul/detailspage.dart';
 import 'package:gokul/model/model.dart';
+import 'package:gokul/resources/color.dart';
 import 'package:gokul/service/firbaseservice.dart';
 
 class ListWisePage extends StatefulWidget {
@@ -76,7 +77,7 @@ class _ListWisePageState extends State<ListWisePage> with SingleTickerProviderSt
                 future: FirebaseFirestore.instance.collection('Products')
                     .where('id', isEqualTo: widget.cat_id)
                     .where('inStock',isEqualTo: "true")
-                    // .orderBy("time",descending: true)
+                    // .orderBy("extra",descending: true)
                     // .limit(2)
                     .get(),
                 builder: (context, snapshot) {
@@ -109,7 +110,8 @@ class _ListWisePageState extends State<ListWisePage> with SingleTickerProviderSt
                                             ));
                                       },
                                       child: Container(
-                                        decoration: BoxDecoration(/*border: Border.all(width: 1, color: Colors.black), */borderRadius: BorderRadius.circular(9)),
+                                        decoration: BoxDecoration(
+                                          /*border: Border.all(width: 1, color: Colors.black), */borderRadius: BorderRadius.circular(9)),
                                         child: Column(
                                           children: [
                                             Container(
