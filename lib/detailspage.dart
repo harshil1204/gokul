@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gokul/config/config.dart';
+import 'package:gokul/config/doubletapper.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -168,55 +169,64 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
             ],
           )
-          :Center(
-    child: Stack(
-      children: [
-        Opacity(
-            opacity: MyConfig.opacity,
-            child: Image.asset(MyConfig.bg,fit: BoxFit.fill,height: double.infinity )),
-         Align(
-          alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: (){
-              setState(() {
-                zoom=false;
-              });
-            },
-            child: Container(
-              margin: const EdgeInsets.only(right: 20,top: 15),
-              padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 1),
-                  color: Colors.black
+          :Stack(
+            children: [
+              Opacity(
+                  opacity: MyConfig.opacity,
+                  child: Image.asset(MyConfig.bg,fit: BoxFit.fill,height: double.infinity )),
+               Align(
+                alignment: Alignment.topRight,
+                child: InkWell(
+                  onTap: (){
+                    setState(() {
+                      zoom=false;
+                    });
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 20,top: 15),
+                    padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 1),
+                        color: Colors.black
+                      ),
+                      child: const Icon(Icons.close,size: 30,color: Colors.white,)),
                 ),
-                child: const Icon(Icons.close,size: 30,color: Colors.white,)),
-          ),
-        ),
-        Container(
-          // margin: const EdgeInsets.only(top: 150),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Center(
-            child: InteractiveViewer(
-              panEnabled: true, // Set it to false
-              boundaryMargin: const EdgeInsets.all(100),
-              minScale: 0.5,
-              maxScale: 2,
-              scaleEnabled: true,
-              child: CachedNetworkImage(
-               imageUrl:widget.data['url'].toString(),
-                width: double.infinity,
-                fit: BoxFit.fill,
-                placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
-                  fit: BoxFit.fill,),
               ),
-            ),
+              /*Container(
+                // margin: const EdgeInsets.only(top: 150),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Center(
+                  child: InteractiveViewer(
+                    panEnabled: true, // Set it to false
+                    boundaryMargin: const EdgeInsets.all(100),
+                    minScale: 0.5,
+                    maxScale: 4,
+                    scaleEnabled: true,
+                    child: CachedNetworkImage(
+                     imageUrl:widget.data['url'].toString(),
+                      width: double.infinity,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
+                        fit: BoxFit.fill,),
+                    ),
+                  ),
+                ),
+              ),*/
+              Center(
+                child: DoubleTappableInteractiveViewer(
+                  scaleDuration: const Duration(milliseconds: 600),
+                  child: CachedNetworkImage(
+                    imageUrl:widget.data['url'].toString(),
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                    placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
+                      fit: BoxFit.fill,),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-
-      ],
-    ),
-    ),
     );
   }
 }

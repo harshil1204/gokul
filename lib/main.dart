@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gokul/homepage.dart';
 import 'package:gokul/splash.dart';
 import 'package:gokul/theme.dart';
+import 'package:upgrader/upgrader.dart';
 import 'firebase_options.dart';
 
 void main() async{
