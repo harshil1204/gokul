@@ -1,4 +1,4 @@
-package com.example.gokul
+package com.jewelleres.gokul
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -8,6 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:gokul/drawer/drawer.dart';
 import 'package:gokul/resources/color.dart';
 import 'package:gokul/service/firbaseservice.dart';
+import 'package:intl/intl.dart';
 import 'package:upgrader/upgrader.dart';
 import 'config/config.dart';
 import 'listPAge.dart';
@@ -23,22 +24,20 @@ class _HomePageState extends State<HomePage> {
   List<Color> colors = [Colors.blue, Colors.red, Colors.pink, Colors.orange];
   final random=Random();
   dynamic banner1;
+  List goldList =[];
   final FirebaseService _firebaseService = FirebaseService();
-  // List<Category> category=[];
-  //
+
   void setCategory()async{
     banner1=await _firebaseService.fetchDataFromFirestoreBanner();
+  }
+  void setGoldList()async{
+   goldList=await _firebaseService.fetchDataFromFirestoreGoldPrice();
   }
  @override
   void initState() {
    setCategory();
-    print("lenght::::::${banner1?[0]["url"]}");
-   // Category newCategory = Category(id: 'category_2', name: 'Rings');
-   // _firebaseService.addCategory(newCategory);
-   //
-   // Product newProduct = Product(id: 'product_2', name: 'rouded', categoryID: 'category_2');
-   // _firebaseService.addProduct(newProduct);
-    // print(category.length);
+   setGoldList();
+   print("gold list :${goldList.length}");
     // TODO: implement initState
     super.initState();
   }
@@ -105,15 +104,20 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         const SizedBox(height: 15,),
-
+                        if(goldList.isNotEmpty)
                         SizedBox(
                           height: 140,
                           child: ListView.builder(
-                            itemCount: 3,
+                            itemCount: goldList.length,
                                 physics: const BouncingScrollPhysics(
                                     parent: AlwaysScrollableScrollPhysics()),
                                 scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
+                              var data=goldList[index];
+                              Timestamp dateString = data['time'];
+                              // Convert the Firebase Timestamp to a DateTime object
+                              DateTime dateTime = dateString.toDate();
+                              String formattedDate = DateFormat('dd MMM yyyy hh:mm a').format(dateTime);
                                 return Container(
                                   height: 130,
                                   width: 150,
@@ -129,47 +133,62 @@ class _HomePageState extends State<HomePage> {
                                     borderRadius: BorderRadius.circular(10)
                                   ),
                                   margin: const EdgeInsets.symmetric(horizontal: 8),
-                                  child: const Padding(
-                                    padding: EdgeInsets.only(left: 14.0),
+                                  child:  Padding(
+                                    padding: const EdgeInsets.only(left: 14.0),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Gap(20),
-                                        Divider(
+                                        const Gap(20),
+                                        const Divider(
                                           color: AppColor.black,
                                           height: 2,
                                           thickness: 4,
                                           endIndent: 30,
                                         ),
-                                        Gap(6),
-                                        Text("Gold",style: TextStyle(
+                                        const Gap(6),
+                                        Text(data['name'].toString(),style: const TextStyle(
                                           color: AppColor.textDark,
                                            fontWeight: FontWeight.bold,
-                                          fontSize: 16
+                                          fontSize: 17
                                         ),),
-                                        Gap(5),
-                                        Text("24k(222)",style: TextStyle(
+                                        const Gap(5),
+                                        Text(data['karet'],style: const TextStyle(
                                             color: AppColor.textDark,
-                                            fontSize: 10
+                                            fontSize: 13
                                         ),),
-                                        Gap(5),
-                                        Text("₹ 60,000 /g",style: TextStyle(
-                                            color: AppColor.textDark,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 19
-                                        ),),
-                                        Gap(9),
+                                        const Gap(5),
+                                        RichText(
+                                            text: TextSpan(
+                                                text: "₹${data['price']}",
+                                                style: const TextStyle(
+                                                    color: AppColor.textDark,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 19
+                                                ),
+                                                children: const [
+                                                  TextSpan(
+                                                      text: ' /g',
+                                                      style: TextStyle(
+                                                          color: AppColor.textLight,
+                                                          fontSize: 14
+                                                      )
+                                                  )
+                                                ]
+                                            )
+
+                                        ),
+                                        const Gap(9),
                                         Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
-                                            Text("Last updated on",style: TextStyle(
+                                            const Text("Last updated on",style: TextStyle(
                                               color: AppColor.textLight,
                                               fontSize: 12
                                             ),),
 
-                                            Text("15 dec 2023, 12:56 PM",style: TextStyle(
+                                            Text(formattedDate,style: const TextStyle(
                                               color: AppColor.textLight,
                                               fontSize: 12
                                             ),),

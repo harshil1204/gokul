@@ -77,8 +77,7 @@ class _ListWisePageState extends State<ListWisePage> with SingleTickerProviderSt
                 future: FirebaseFirestore.instance.collection('Products')
                     .where('id', isEqualTo: widget.cat_id)
                     .where('inStock',isEqualTo: "true")
-                    // .orderBy("extra",descending: true)
-                    // .limit(2)
+                    // .orderBy("time",descending: true)
                     .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
@@ -126,16 +125,18 @@ class _ListWisePageState extends State<ListWisePage> with SingleTickerProviderSt
                                                   placeholder: (context, url) => Image.asset("assets/images/loading.png",width: double.infinity,
                                                     fit: BoxFit.fill,),
                                                 )),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                //color: Colors.grey,
-                                                  borderRadius: BorderRadius.circular(9)
-                                              ),
-                                              width: double.infinity,
-                                              child: Center(
-                                                child: Text(
-                                                  data['name'].toString() ?? '',
-                                                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: Colors.black),
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.grey,
+                                                    borderRadius: BorderRadius.circular(9)
+                                                ),
+                                                width: double.infinity,
+                                                child: Center(
+                                                  child: Text(
+                                                    data['name'].toString() ?? '',
+                                                    style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: Colors.black),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -146,7 +147,6 @@ class _ListWisePageState extends State<ListWisePage> with SingleTickerProviderSt
                                   },
                                 ),
                               )
-
                             ],
                           ),
                         ),

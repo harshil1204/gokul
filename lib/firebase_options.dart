@@ -63,6 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '983758988574',
     projectId: 'gokul-f0492',
     storageBucket: 'gokul-f0492.appspot.com',
-    iosBundleId: 'com.example.gokul',
+    iosBundleId: 'com.jewelleres.gokul',
   );
 }

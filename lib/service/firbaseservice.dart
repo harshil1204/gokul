@@ -68,6 +68,23 @@ Future<dynamic> fetchDataFromFirestoreBanner() async {
   }
 }
 
+Future<dynamic> fetchDataFromFirestoreGoldPrice() async {
+  List<Map<String, dynamic>> dataList = [];
+
+  try {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('GoldPrice').orderBy('time',descending: true).get();
+
+    var a=querySnapshot.docs.map((e) => e.data()).toList();
+
+
+    return a;
+  } catch (e) {
+    // Handle errors here
+    print("Error fetching data: $e");
+    return dataList; // Return an empty list or handle the error as needed
+  }
+}
+
 Future<List<Category>> getAllCategories() async {
   List<Category> categories = [];
   QuerySnapshot categorySnapshot = await _firestore.collection('Categories').get();
