@@ -41,7 +41,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   void afterFirstLayout(BuildContext context) {
     Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage(),));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage(),));
     });
   }
 }
