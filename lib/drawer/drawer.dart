@@ -79,8 +79,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     color: AppColor.black,
                   ),
                   title: const Text('Share',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                  onTap: () {
-                    Navigator.pop(context);
+                  onTap: () async{
+                    final url = Uri.parse('https://play.google.com/store/search?q=gokul%20jewellers&c=apps&hl=en&gl=US');
+                    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                    throw Exception('Could not launch $url');
+                    }
                   },
                   trailing:  const Icon(
                     Icons.arrow_forward_ios_outlined,
@@ -152,8 +155,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     color: AppColor.black,
                   ),
                   title: const Text('Rate App',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                  onTap: () {
-                    Navigator.pop(context);
+                  onTap: () async{
+                    final url = Uri.parse('https://play.google.com/store/search?q=gokul%20jewellers&c=apps&hl=en&gl=US');
+                    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                    throw Exception('Could not launch $url');
+                    }
                   },
                   trailing:  const Icon(
                     Icons.arrow_forward_ios_outlined,

@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                                 enlargeCenterPage: false,
                                 reverse: false,
                                 autoPlay: true,
-                                scrollPhysics: const NeverScrollableScrollPhysics(),
+                                // scrollPhysics: const NeverScrollableScrollPhysics(),
                                 autoPlayInterval: const Duration(seconds: 5),
                                 autoPlayAnimationDuration: const Duration(milliseconds: 800),
                                 autoPlayCurve: Curves.fastOutSlowIn,
@@ -207,6 +207,7 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: ListView.builder(
                             itemCount:snapshot.data!.docs.length ?? 0,
+                            // shrinkWrap: true,
                             physics: const AlwaysScrollableScrollPhysics(
                                 parent: BouncingScrollPhysics()
                             ),

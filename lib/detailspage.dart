@@ -5,6 +5,7 @@ import 'package:gokul/config/config.dart';
 import 'package:gokul/config/doubletapper.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailsPage extends StatefulWidget {
   var data;
@@ -28,7 +29,12 @@ class _DetailsPageState extends State<DetailsPage> {
         actions:  [
           InkWell(
             onTap: () async{
-              await Share.share('Name: ${widget.data['name']} \n weight: ${widget.data['price']}(gm) \n extra: ₹${widget.data['extra']}');
+              var contact = "+919408851222";
+              final url = Uri.parse('whatsapp://send?phone=$contact&text=Name: ${widget.data['name']} \n weight: ${widget.data['price']}(gm) \n extra: ₹${widget.data['extra']}');
+              if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                throw Exception('Could not launch $url');
+              }
+              //await Share.share('Name: ${widget.data['name']} \n weight: ${widget.data['price']}(gm) \n extra: ₹${widget.data['extra']}');
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),

@@ -77,7 +77,8 @@ class _ListWisePageState extends State<ListWisePage> with SingleTickerProviderSt
                 future: FirebaseFirestore.instance.collection('Products')
                     .where('id', isEqualTo: widget.cat_id)
                     .where('inStock',isEqualTo: "true")
-                    // .orderBy("time",descending: true)
+                    .orderBy("time ",descending: true)
+                    // .limit(1)
                     .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
@@ -159,7 +160,11 @@ class _ListWisePageState extends State<ListWisePage> with SingleTickerProviderSt
                   }
                 }),
             FutureBuilder<QuerySnapshot>(
-                future: FirebaseFirestore.instance.collection('Products').where('id', isEqualTo: widget.cat_id).where('inStock',isEqualTo: "false").get(),
+                future: FirebaseFirestore.instance.collection('Products')
+                    .where('id', isEqualTo: widget.cat_id)
+                    .where('inStock',isEqualTo: "false")
+                    .orderBy("time ",descending: true)
+                    .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     print(snapshot.data!.docs);
