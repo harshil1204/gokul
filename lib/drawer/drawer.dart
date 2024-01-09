@@ -211,10 +211,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   const SizedBox(width: 9,),
                   InkWell(
                       onTap: () async{
-                        const String lat = "21.48695";
-                        const String lng = "70.95353";
-                        //const String mapUrl = "geo:$lat,$lng";
-                        final url = Uri.parse("geo:$lat,$lng");
+                        final url = Uri.parse('https://maps.app.goo.gl/Ubg4ZumM6fxo23wG9');
                         if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
                           throw Exception('Could not launch $url');
                         }
